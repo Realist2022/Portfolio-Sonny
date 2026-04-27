@@ -10,7 +10,7 @@ const allFilters = Array.from(
 	new Set(projects.flatMap((p) => p.techStack ?? []))
 ).sort();
 
-export default function MainSection() {
+export default function ProjectsSection() {
 	const [selectedFilter, setSelectedFilter] = useState<string>("");
 
 	const filtered = useMemo(

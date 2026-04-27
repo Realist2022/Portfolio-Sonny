@@ -11,7 +11,7 @@ interface TechScrollBarProps {
 const ARROW_STEP = 100;
 
 function escTech(s: string): string {
-  if (typeof window !== "undefined" && window.CSS?.escape) {
+  if (typeof window !== "undefined") {
     return CSS.escape(s);
   }
   return String(s).replace(/["\\]/g, "\\$&");
