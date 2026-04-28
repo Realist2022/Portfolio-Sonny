@@ -28,43 +28,42 @@ a {
 
 /* ── Social conveyor: slide in → push stack → rightmost drops ── */
 /*
-  24s cycle. Baseline: position:fixed, right:34px, top:155px.
+  30s cycle. Baseline: position:fixed, right:34px, top:155px.
   Slot positions (translateX offsets from right:34px baseline):
     leftSlot  = translateX(-92px)
     midSlot   = translateX(-46px)
     rightSlot = translateX(0)  ← directly above chatbot, drops from here
 
-  Initial state at 0%:  LI@leftSlot, YT@midSlot, GH=traveling from off-screen
+  Initial state at 0%:  LI@midSlot, YT@rightSlot, GH=traveling from off-screen
+  (links are pre-shifted right at end of previous cycle, after GH drops at ~92%)
 
-  SUB-CYCLE 1  (0–8s  = 0–33.33%):  GH  slides in → bumps → YouTube  drops
-  SUB-CYCLE 2  (8–16s = 33.33–66.67%): YT slides in → bumps → LinkedIn drops
-  SUB-CYCLE 3  (16–24s= 66.67–100%):  LI  slides in → bumps → GitHub   drops
+  NEW BEHAVIOUR — post-drop auto-shift:
+    After each link drops+resets, the 2 remaining links smoothly slide one slot
+    right (~3% / ~0.9 s). The incoming traveler then arrives at the now-empty
+    leftSlot with no bump.
+
+  SUB-CYCLE 1  (0–33.33% / 0–10s):   GH  slides in → stacks left → YouTube  drops
+  SUB-CYCLE 2  (33.33–66.67% / 10–20s): YT slides in → stacks left → LinkedIn drops
+  SUB-CYCLE 3  (66.67–100% / 20–30s):  LI  slides in → stacks left → GitHub   drops
   then repeats seamlessly.
 
-  Each sub-cycle:
-    0–3s of sub:   2 circles in stack, 1 traveling left→right
-    3s of sub:     traveler arrives, instant bump (all 3 visible)
-    3–4.5s of sub: 3 circles stacked, brief pause
-    4.5s of sub:   rightmost morphs to teardrop & drops
-    4.5–6s of sub: falling
-    6s of sub:     squash / impact on chatbot
-    6–8s of sub:   fallen circle teleports off-screen, resets
-
-  Splash impacts: 24.5%×24s≈5.9s (YT) | 58%×24s≈13.9s (LI) | 91.5%×24s≈22s (GH)
+  Splash impacts: 24.5%×30s≈7.35s (YT) | 58%×30s≈17.4s (LI) | 91.5%×30s≈27.45s (GH)
 */
 
 /* ── GitHub ─────────────────────────────────────── */
 @keyframes drop-gh {
-  /* sub-cycle 1: GH is the traveler */
+  /* sub-cycle 1: GH travels in → slots into leftSlot (already empty) */
   0%     { transform: translateX(-100vw); border-radius: 50%; opacity: 0; }
   1%     { transform: translateX(-100vw); border-radius: 50%; opacity: 1; }
-  12.5%  { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* arrives → bump */
-  /* sub-cycle 2: GH in leftSlot, YT arrives */
-  45%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; }
-  46%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* YT bumps → GH→midSlot */
-  /* sub-cycle 3: GH in midSlot, LI arrives → GH→rightSlot → drops */
-  79%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; }
-  79.5%  { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* LI bumps → GH→rightSlot */
+  12.5%  { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* arrives leftSlot */
+  /* sub-cycle 2: post-YT-drop auto-shift — GH leftSlot → midSlot */
+  26%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* hold until YT resets */
+  29%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* slide to midSlot */
+  /* sub-cycle 2 continued: GH stays midSlot while YT travels */
+  58%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* hold until LI squashes */
+  /* post-LI-drop auto-shift — GH midSlot → rightSlot */
+  62%    { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* slide to rightSlot */
+  /* sub-cycle 3: GH in rightSlot → drops */
   85%    { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* pause */
   85.5%  { transform: translateX(0);      border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 1; } /* morph */
   91%    { transform: translateX(0) translateY(calc(100vh - 235px)) scaleX(0.7) scaleY(1.5); border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 0.9; }
@@ -75,43 +74,49 @@ a {
 
 /* ── LinkedIn ────────────────────────────────────── */
 @keyframes drop-li {
-  /* sub-cycle 1: LI in leftSlot, GH arrives → LI→midSlot */
-  0%     { transform: translateX(-92px);  border-radius: 50%; opacity: 1; }
-  12%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; }
-  12.5%  { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* GH bumps → LI→midSlot */
-  /* sub-cycle 2: LI in midSlot, YT arrives → LI→rightSlot → drops */
-  45%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; }
-  46%    { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* YT bumps → LI→rightSlot */
+  /* sub-cycle 1: LI pre-shifted to midSlot (from end of previous cycle) */
+  0%     { transform: translateX(-46px);  border-radius: 50%; opacity: 1; }
+  /* post-YT-drop auto-shift — LI midSlot → rightSlot */
+  26%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* hold until YT resets */
+  29%    { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* slide to rightSlot */
+  /* sub-cycle 2: LI in rightSlot → drops when YT arrives */
+  45.5%  { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* YT slots into leftSlot */
   51.5%  { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* pause */
   52%    { transform: translateX(0);      border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 1; } /* morph */
   57.5%  { transform: translateX(0) translateY(calc(100vh - 235px)) scaleX(0.7) scaleY(1.5); border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 0.9; }
   58%    { transform: translateX(0) translateY(calc(100vh - 235px)) scaleX(3.5) scaleY(0.04); border-radius: 50%; opacity: 0; } /* squash */
   59%    { transform: translateX(-100vw); border-radius: 50%; opacity: 0; } /* reset */
-  /* sub-cycle 3: LI is the traveler */
+  /* sub-cycle 3: LI travels in → slots into leftSlot (already empty) */
   67%    { transform: translateX(-100vw); border-radius: 50%; opacity: 1; }
-  79%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* arrives → bump */
-  100%   { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* seamless with 0% */
+  79%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* arrives leftSlot */
+  /* post-GH-drop auto-shift — LI leftSlot → midSlot */
+  92%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* hold until GH resets */
+  96%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* slide to midSlot */
+  100%   { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* seamless with 0% */
 }
 
 /* ── YouTube ─────────────────────────────────────── */
 @keyframes drop-yt {
-  /* sub-cycle 1: YT in midSlot, GH arrives → YT→rightSlot → drops */
-  0%     { transform: translateX(-46px);  border-radius: 50%; opacity: 1; }
-  12%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; }
-  12.5%  { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* GH bumps → YT→rightSlot */
+  /* sub-cycle 1: YT pre-shifted to rightSlot (from end of previous cycle) → drops */
+  0%     { transform: translateX(0);      border-radius: 50%; opacity: 1; }
+  12.5%  { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* GH slots into leftSlot */
   18%    { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* pause */
   18.5%  { transform: translateX(0);      border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 1; } /* morph */
   24%    { transform: translateX(0) translateY(calc(100vh - 235px)) scaleX(0.7) scaleY(1.5); border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 0.9; }
   24.5%  { transform: translateX(0) translateY(calc(100vh - 235px)) scaleX(3.5) scaleY(0.04); border-radius: 50%; opacity: 0; } /* squash */
   26%    { transform: translateX(-100vw); border-radius: 50%; opacity: 0; } /* reset */
-  /* sub-cycle 2: YT is the traveler */
+  /* sub-cycle 2: YT travels in → slots into leftSlot (already empty) */
   34%    { transform: translateX(-100vw); border-radius: 50%; opacity: 1; }
-  45.5%  { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* arrives → bump */
-  46%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* stays leftSlot */
-  /* sub-cycle 3: LI arrives → YT→midSlot */
-  79%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; }
-  79.5%  { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* LI bumps → YT→midSlot */
-  100%   { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* seamless with 0% */
+  45.5%  { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* arrives leftSlot */
+  /* post-LI-drop auto-shift — YT leftSlot → midSlot */
+  59%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* hold until LI resets */
+  62%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* slide to midSlot */
+  /* sub-cycle 3: YT stays midSlot while LI travels */
+  79%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* LI slots into leftSlot */
+  /* post-GH-drop auto-shift — YT midSlot → rightSlot */
+  92%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* hold until GH resets */
+  96%    { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* slide to rightSlot */
+  100%   { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* seamless with 0% */
 }
 
 /* shared base styles */
