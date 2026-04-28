@@ -193,6 +193,9 @@ export default function AiChatBot() {
 				aria-label={isOpen ? "Close chat" : "Open AI chat"}
 				className="fixed right-6 bottom-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#ff4b1f] shadow-[0_8px_32px_rgba(255,75,31,0.4)] transition hover:-translate-y-0.5 hover:bg-[#ff5a37]"
 			>
+				<span className="splash-ring" style={{ animationDelay: "7.35s" }} />
+				<span className="splash-ring" style={{ animationDelay: "17.4s" }} />
+				<span className="splash-ring" style={{ animationDelay: "27.45s" }} />
 				{isOpen ? (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"

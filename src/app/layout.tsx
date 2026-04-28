@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "../components/layout/Footer";
 import Navbar from "../components/layout/Navbar";
 import AiChatBot from "../components/modals/AiChatBot";
+import SocialDrips from "../components/SocialDrips";
 import CursorGlow from "../components/CursorGlow";
 import "./globals.css";
 
@@ -39,6 +40,7 @@ export default function RootLayout({
           <Navbar />
           <div className="flex-1">{children}</div>
           <Footer />
+          <SocialDrips />
           <AiChatBot />
         </div>
       </body>

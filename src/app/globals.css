@@ -25,3 +25,138 @@ body {
 a {
   color: inherit;
 }
+
+/* ── Social conveyor: slide in → push stack → rightmost drops ── */
+/*
+  24s cycle. Baseline: position:fixed, right:34px, top:155px.
+  Slot positions (translateX offsets from right:34px baseline):
+    leftSlot  = translateX(-92px)
+    midSlot   = translateX(-46px)
+    rightSlot = translateX(0)  ← directly above chatbot, drops from here
+
+  Initial state at 0%:  LI@leftSlot, YT@midSlot, GH=traveling from off-screen
+
+  SUB-CYCLE 1  (0–8s  = 0–33.33%):  GH  slides in → bumps → YouTube  drops
+  SUB-CYCLE 2  (8–16s = 33.33–66.67%): YT slides in → bumps → LinkedIn drops
+  SUB-CYCLE 3  (16–24s= 66.67–100%):  LI  slides in → bumps → GitHub   drops
+  then repeats seamlessly.
+
+  Each sub-cycle:
+    0–3s of sub:   2 circles in stack, 1 traveling left→right
+    3s of sub:     traveler arrives, instant bump (all 3 visible)
+    3–4.5s of sub: 3 circles stacked, brief pause
+    4.5s of sub:   rightmost morphs to teardrop & drops
+    4.5–6s of sub: falling
+    6s of sub:     squash / impact on chatbot
+    6–8s of sub:   fallen circle teleports off-screen, resets
+
+  Splash impacts: 24.5%×24s≈5.9s (YT) | 58%×24s≈13.9s (LI) | 91.5%×24s≈22s (GH)
+*/
+
+/* ── GitHub ─────────────────────────────────────── */
+@keyframes drop-gh {
+  /* sub-cycle 1: GH is the traveler */
+  0%     { transform: translateX(-100vw); border-radius: 50%; opacity: 0; }
+  1%     { transform: translateX(-100vw); border-radius: 50%; opacity: 1; }
+  12.5%  { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* arrives → bump */
+  /* sub-cycle 2: GH in leftSlot, YT arrives */
+  45%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; }
+  46%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* YT bumps → GH→midSlot */
+  /* sub-cycle 3: GH in midSlot, LI arrives → GH→rightSlot → drops */
+  79%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; }
+  79.5%  { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* LI bumps → GH→rightSlot */
+  85%    { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* pause */
+  85.5%  { transform: translateX(0);      border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 1; } /* morph */
+  91%    { transform: translateX(0) translateY(calc(100vh - 235px)) scaleX(0.7) scaleY(1.5); border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 0.9; }
+  91.5%  { transform: translateX(0) translateY(calc(100vh - 235px)) scaleX(3.5) scaleY(0.04); border-radius: 50%; opacity: 0; } /* squash */
+  92%    { transform: translateX(-100vw); border-radius: 50%; opacity: 0; } /* reset */
+  100%   { transform: translateX(-100vw); border-radius: 50%; opacity: 0; }
+}
+
+/* ── LinkedIn ────────────────────────────────────── */
+@keyframes drop-li {
+  /* sub-cycle 1: LI in leftSlot, GH arrives → LI→midSlot */
+  0%     { transform: translateX(-92px);  border-radius: 50%; opacity: 1; }
+  12%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; }
+  12.5%  { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* GH bumps → LI→midSlot */
+  /* sub-cycle 2: LI in midSlot, YT arrives → LI→rightSlot → drops */
+  45%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; }
+  46%    { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* YT bumps → LI→rightSlot */
+  51.5%  { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* pause */
+  52%    { transform: translateX(0);      border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 1; } /* morph */
+  57.5%  { transform: translateX(0) translateY(calc(100vh - 235px)) scaleX(0.7) scaleY(1.5); border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 0.9; }
+  58%    { transform: translateX(0) translateY(calc(100vh - 235px)) scaleX(3.5) scaleY(0.04); border-radius: 50%; opacity: 0; } /* squash */
+  59%    { transform: translateX(-100vw); border-radius: 50%; opacity: 0; } /* reset */
+  /* sub-cycle 3: LI is the traveler */
+  67%    { transform: translateX(-100vw); border-radius: 50%; opacity: 1; }
+  79%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* arrives → bump */
+  100%   { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* seamless with 0% */
+}
+
+/* ── YouTube ─────────────────────────────────────── */
+@keyframes drop-yt {
+  /* sub-cycle 1: YT in midSlot, GH arrives → YT→rightSlot → drops */
+  0%     { transform: translateX(-46px);  border-radius: 50%; opacity: 1; }
+  12%    { transform: translateX(-46px);  border-radius: 50%; opacity: 1; }
+  12.5%  { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* GH bumps → YT→rightSlot */
+  18%    { transform: translateX(0);      border-radius: 50%; opacity: 1; } /* pause */
+  18.5%  { transform: translateX(0);      border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 1; } /* morph */
+  24%    { transform: translateX(0) translateY(calc(100vh - 235px)) scaleX(0.7) scaleY(1.5); border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; opacity: 0.9; }
+  24.5%  { transform: translateX(0) translateY(calc(100vh - 235px)) scaleX(3.5) scaleY(0.04); border-radius: 50%; opacity: 0; } /* squash */
+  26%    { transform: translateX(-100vw); border-radius: 50%; opacity: 0; } /* reset */
+  /* sub-cycle 2: YT is the traveler */
+  34%    { transform: translateX(-100vw); border-radius: 50%; opacity: 1; }
+  45.5%  { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* arrives → bump */
+  46%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; } /* stays leftSlot */
+  /* sub-cycle 3: LI arrives → YT→midSlot */
+  79%    { transform: translateX(-92px);  border-radius: 50%; opacity: 1; }
+  79.5%  { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* LI bumps → YT→midSlot */
+  100%   { transform: translateX(-46px);  border-radius: 50%; opacity: 1; } /* seamless with 0% */
+}
+
+/* shared base styles */
+.social-drop-1,
+.social-drop-2,
+.social-drop-3 {
+  position: fixed;
+  right: 34px;  /* chatbot button center */
+  top: 155px;   /* below navbar: logo h-30(120px) + py-4(32px) = 152px */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(9, 9, 11, 0.82);
+  border: 2px solid rgba(255, 75, 31, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transform-origin: center center;
+  pointer-events: auto;
+  z-index: 49;
+  text-decoration: none;
+}
+
+.social-drop-1 { animation: drop-gh 30s linear infinite; }  /* GitHub   */
+.social-drop-2 { animation: drop-li 30s linear infinite; }  /* LinkedIn */
+.social-drop-3 { animation: drop-yt 30s linear infinite; }  /* YouTube  */
+
+/* ── Chatbot splash rings ──────────────────────────────────── */
+/* Impact times (30s cycle):
+   YouTube  squash at 24.5% × 30s =  7.35s
+   LinkedIn squash at 58%   × 30s = 17.4s
+   GitHub   squash at 91.5% × 30s = 27.45s              */
+@keyframes splash-ring-sync {
+  0%   { transform: scale(1);   opacity: 0;   }
+  1%   { opacity: 0.7; }
+  12%  { transform: scale(3.2); opacity: 0;   }
+  100% { transform: scale(1);   opacity: 0;   }
+}
+
+.splash-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 75, 31, 0.65);
+  animation: splash-ring-sync 30s ease-out infinite;
+  pointer-events: none;
+}
