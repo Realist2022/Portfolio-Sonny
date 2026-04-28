@@ -125,7 +125,7 @@ a {
 .social-drop-3 {
   position: fixed;
   right: 34px;  /* chatbot button center */
-  top: 155px;   /* below navbar: logo h-30(120px) + py-4(32px) = 152px */
+  top: 110px;   /* below navbar: h-[100px] + 10px gap */
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -137,7 +137,7 @@ a {
   color: #ffffff;
   transform-origin: center center;
   pointer-events: auto;
-  z-index: 49;
+  z-index: 51; /* above mobile dropdown (z-50) so always visible below navbar */
   text-decoration: none;
 }
 
