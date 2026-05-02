@@ -196,7 +196,7 @@ const AboutSection: React.FC = () => {
                   </div>
                 ) : (
                   <Image
-                    src="/selfie.jpg"
+                    src="/images/selfie.jpg"
                     alt="Sonny Tapara"
                     className="block h-full w-full rounded-full bg-[#16161a] object-cover"
                     width={72}
