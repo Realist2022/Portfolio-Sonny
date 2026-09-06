@@ -131,6 +131,35 @@ const projects: Project[] = [
     ],
     techStack: ["Electronic Repairs", "Problem Solving", "Debugging"],
   },
+  {
+    id: 7,
+    title: "CV to Job Guestimator",
+    description:
+      "Fine-tuned Llama-3.2-3B with LoRA so three structured-extraction agents run on one small self-hosted model instead of a per-token API. Ships as a FastAPI pipeline that redacts PII, pulls the requirements out of a job listing and scores a CV against them, served either locally through Ollama or on an L4 GPU via vLLM on Modal. Wired into the chat window on this site — open it and follow the score card link.",
+    image: "/images/ft_model.png",  
+    links: [
+      {
+        label: "Guestimator Repo",
+        url: "https://github.com/Realist2022/CV_to_Job_Guestimator",
+      },
+      {
+        label: "Fine-Tuning Repo",
+        url: "https://github.com/Realist2022/FT_MODEL2",
+      },
+    ],
+    techStack: [
+      "Python",
+      "SLM Fine-Tuning",
+      "LoRA",
+      "QLoRA",
+      "Unsloth",
+      "vLLM",
+      "Modal",
+      "FastAPI",
+      "Docker",
+      "REST APIs",
+    ],
+  },
 ];
 
 export default projects;
