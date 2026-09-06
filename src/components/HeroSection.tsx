@@ -11,22 +11,25 @@ const focusAreas = [
 
 export default function HeroSection() {
   return (
-    <section className="relative grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
+    <section className="relative grid items-center gap-10 lg:min-h-[calc(100svh-100px)] lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
       <div
-        className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2 overflow-hidden"
-        style={{ filter: "drop-shadow(0 0 15px rgba(239, 68, 68, 0.3))" }}
+        className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2 overflow-hidden lg:-inset-y-16"
+        style={{
+          maskImage: "linear-gradient(180deg, transparent 0%, #000 14%, #000 80%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(180deg, transparent 0%, #000 14%, #000 80%, transparent 100%)",
+        }}
       >
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="h-full w-full object-cover mix-blend-screen pointer-events-none"
+          className="h-full w-full object-cover mix-blend-screen pointer-events-none brightness-125 saturate-110"
         >
-          <source src="/videos/dragonVideo.mp4" type="video/mp4" />
+          <source src="/videos/hero_main.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-black/0 via-black/30 to-black/90" />
+        <div className="absolute inset-0 bg-black/25" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-black/0 via-black/10 to-black/70" />
       </div>
 
       <div className="relative z-10 space-y-8">
@@ -69,7 +72,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div className="relative z-10 overflow-hidden rounded-[28px] border border-[rgba(255,69,0,0.32)] bg-black/40 backdrop-blur-md p-7 shadow-[0_24px_120px_rgba(0,0,0,0.35)]">
+      {/* <div className="relative z-10 overflow-hidden rounded-[28px] border border-[rgba(255,69,0,0.32)] bg-black/40 backdrop-blur-md p-7 shadow-[0_24px_120px_rgba(0,0,0,0.35)]">
         <div className="absolute inset-x-8 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,75,31,0.55),transparent)]" />
         <div className="space-y-6">
           <div className="space-y-2">
@@ -93,7 +96,7 @@ export default function HeroSection() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }
