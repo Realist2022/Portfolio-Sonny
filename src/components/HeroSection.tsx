@@ -15,8 +15,8 @@ export default function HeroSection() {
       <div
         className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2 overflow-hidden lg:-inset-y-16"
         style={{
-          maskImage: "linear-gradient(180deg, transparent 0%, #000 14%, #000 80%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(180deg, transparent 0%, #000 14%, #000 80%, transparent 100%)",
+          maskImage: "linear-gradient(180deg, transparent 0%, #000 20%, #000 78%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(180deg, transparent 0%, #000 20%, #000 78%, transparent 100%)",
         }}
       >
         <video
@@ -24,12 +24,12 @@ export default function HeroSection() {
           loop
           muted
           playsInline
-          className="h-full w-full object-cover mix-blend-screen pointer-events-none brightness-125 saturate-110"
+          className="h-full w-full object-cover mix-blend-screen pointer-events-none brightness-125 saturate-100"
         >
           <source src="/videos/hero_main.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/25" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-black/0 via-black/10 to-black/70" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-black/0 via-black/10 to-black/85" />
       </div>
 
       <div className="relative z-10 space-y-8">

@@ -36,7 +36,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-[#050507] text-[#f4ebe6]">
         <CursorGlow />
-        <div className="flex min-h-full flex-col bg-[radial-gradient(circle_at_top,rgba(255,90,55,0.16),transparent_22%),radial-gradient(circle_at_bottom,rgba(255,90,55,0.08),transparent_28%),linear-gradient(180deg,#09090b_0%,#050507_100%)]">
+        <div className="flex min-h-full flex-col bg-[radial-gradient(circle_at_top,rgba(255,90,55,0.07),transparent_22%),radial-gradient(circle_at_bottom,rgba(255,90,55,0.08),transparent_28%),linear-gradient(180deg,#09090b_0%,#050507_100%)]">
           <Navbar />
           <div className="flex-1">{children}</div>
           <Footer />
