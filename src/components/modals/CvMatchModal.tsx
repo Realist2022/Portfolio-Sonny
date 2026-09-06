@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useCvMatch } from "@/src/hooks/useCvMatch";
-import { validateUpload } from "@/src/lib/cv.api";
+import { validateUpload, warmCvService } from "@/src/lib/cv.api";
 import type { MatchResponse } from "@/src/types/cv";
 
 interface CvMatchModalProps {
@@ -231,6 +231,26 @@ export default function CvMatchModal({ open, onClose }: CvMatchModalProps) {
 
 	useEffect(() => {
 		if (open) closeRef.current?.focus();
+	}, [open]);
+
+	// Start waking the GPU the moment this opens, not when Score is pressed.
+	// The model scales to zero, so a cold run spends ~90s booting before it
+	// does any work at all. A visitor spends a comparable stretch reading
+	// this dialog and finding a file, so moving the wake-up here hides most
+	// of that boot behind time they were spending anyway.
+	//
+	// Fired on open rather than when the chat window opens: every wake-up
+	// costs GPU minutes whether or not a match follows, and opening this
+	// dialog is the first point where the visitor has actually shown intent.
+	//
+	// Aborted on close so shutting the dialog straight away doesn't leave a
+	// request hanging; the backend's wake-up continues regardless, which is
+	// the point.
+	useEffect(() => {
+		if (!open) return;
+		const controller = new AbortController();
+		void warmCvService(controller.signal);
+		return () => controller.abort();
 	}, [open]);
 
 	// A cold Modal container takes minutes to boot vLLM. Say so, rather than

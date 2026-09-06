@@ -67,6 +67,32 @@ export async function matchJobToCv({
 	return response.json() as Promise<MatchResponse>;
 }
 
+/**
+ * Ask the service to start waking its GPU. Returns as soon as the request is
+ * queued, never when the model is ready.
+ *
+ * Deliberately swallows every error: this is an optimisation fired on a
+ * dialog opening, before the visitor has asked for anything, so a failure
+ * must be invisible. The worst case is the match pays the cold start it
+ * would have paid regardless.
+ */
+export async function warmCvService(signal?: AbortSignal): Promise<void> {
+	try {
+		// An explicit body so Content-Length is always set. A POST with no
+		// body is rejected with 411 by Google's front end in front of Cloud
+		// Run, which would silently disable warming in production while
+		// looking fine locally.
+		await fetch("/api/cv/warm", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: "{}",
+			signal,
+		});
+	} catch {
+		// Ignored on purpose — see above.
+	}
+}
+
 /** Is the Python service up? Cheap — never touches the GPU. */
 export async function fetchCvServiceHealth(signal?: AbortSignal): Promise<HealthResponse> {
 	const response = await fetch("/api/cv/health", { signal });
