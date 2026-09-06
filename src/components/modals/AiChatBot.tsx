@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useChat } from "@/src/hooks/useChat";
+import CvMatchModal from "@/src/components/modals/CvMatchModal";
 
 export default function AiChatBot() {
 	const [isOpen, setIsOpen] = useState(false);
 	const { messages, loading, error, sendMessage } = useChat();
 	const [inputValue, setInputValue] = useState("");
+	const [isCvMatchOpen, setIsCvMatchOpen] = useState(false);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -93,8 +95,17 @@ export default function AiChatBot() {
 										/>
 									</svg>
 								</div>
-								<p className="text-center text-sm text-[rgba(245,236,231,0.4)]">
-									Start the conversation by typing a message below.
+								<p className="max-w-[85%] text-center text-sm leading-relaxed text-[rgba(245,236,231,0.4)]">
+									Start the conversation by typing a message below, or click here
+									for my{" "}
+									<button
+										type="button"
+										onClick={() => setIsCvMatchOpen(true)}
+										className="font-semibold text-[#ff4b1f] underline decoration-[rgba(255,75,31,0.5)] underline-offset-2 transition hover:text-[#ff5a37] hover:decoration-[#ff5a37]"
+									>
+										CV to job match score card
+									</button>
+									.
 								</p>
 							</div>
 						) : (
@@ -226,6 +237,10 @@ export default function AiChatBot() {
 					</svg>
 				)}
 			</button>
+			<CvMatchModal
+				open={isCvMatchOpen}
+				onClose={() => setIsCvMatchOpen(false)}
+			/>
 		</>
 	);
 }
