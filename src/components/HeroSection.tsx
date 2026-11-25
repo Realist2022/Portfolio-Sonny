@@ -15,7 +15,7 @@ export default function HeroSection() {
   return (
     <section className="relative grid items-center gap-10 lg:min-h-[calc(100svh-100px)] lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
       <div
-        className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2 overflow-hidden bg-[#0a0f1a] lg:-inset-y-16 lg:bg-transparent"
+        className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2 overflow-hidden lg:-inset-y-16"
         style={{
           maskImage:
             "linear-gradient(180deg, transparent 0%, #000 14%, #000 80%, transparent 100%)",
@@ -35,10 +35,9 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-black/25" />
         {/* On mobile and tablet the text spans the full width, so tint the
             whole video with a cool navy that gets darker towards the text.
-            The navy base above (instead of the page's warm glow) keeps the
-            blue video from turning muddy brown. On desktop the animated glow
+            On desktop the animated glow
             behind the text does this job. */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,15,26,0)_0%,rgba(10,15,26,0.3)_35%,rgba(10,15,26,0.5)_70%,rgba(10,15,26,0.65)_100%)] lg:hidden" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,15,26,0)_0%,rgba(10,15,26,0.15)_35%,rgba(10,15,26,0.3)_70%,rgba(10,15,26,0.45)_100%)] lg:hidden" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-black/0 via-black/10 to-black/70" />
       </div>
 
