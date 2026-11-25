@@ -18,6 +18,15 @@ import type { MatchResponse } from "@/src/types/cv";
  *   skills_weight          number 0.0-1.0                 (optional)
  *   work_experience_weight number 0.0-1.0                 (optional)
  */
+/**
+ * Seconds the host may let this function run. A cold run waits on Cloud Run
+ * and a Modal GPU both booting before any scoring starts, which can take
+ * minutes. Without this, the platform default can end the function before the
+ * upstream answers. 300 is the ceiling on Vercel Hobby with Fluid compute;
+ * keep it above CV_GUESTIMATOR_TIMEOUT_MS (280s by default).
+ */
+export const maxDuration = 300;
+
 export async function POST(request: Request): Promise<Response> {
   return handleUpload<MatchResponse>(request, "/api/match", (form) => {
     const outbound = new FormData();
