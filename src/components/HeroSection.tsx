@@ -51,7 +51,7 @@ export default function HeroSection() {
             </h1>
           </motion.div>
 
-          <p className="max-w-2xl text-lg leading-8 text-[rgba(245,236,231,0.8)] md:text-xl">
+          <p className="max-w-2xl text-lg leading-8 font-semibold text-[rgba(245,236,231,0.8)] md:text-xl">
             I help businesses save time through AI, automation, and intelligent
             software.
           </p>
