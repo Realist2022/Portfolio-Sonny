@@ -15,8 +15,10 @@ export default function HeroSection() {
       <div
         className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2 overflow-hidden lg:-inset-y-16"
         style={{
-          maskImage: "linear-gradient(180deg, transparent 0%, #000 14%, #000 80%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(180deg, transparent 0%, #000 14%, #000 80%, transparent 100%)",
+          maskImage:
+            "linear-gradient(180deg, transparent 0%, #000 14%, #000 80%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(180deg, transparent 0%, #000 14%, #000 80%, transparent 100%)",
         }}
       >
         <video
@@ -34,7 +36,7 @@ export default function HeroSection() {
 
       <div className="relative z-10 space-y-8">
         <div className="inline-flex rounded-full border border-[rgba(255,75,31,0.55)] bg-[rgba(255,75,31,0.08)] px-4 py-2 text-sm font-medium tracking-[0.14em] text-[#f6d7cc] uppercase">
-          Full-Stack Developer and AI Engineer
+          Creative AI Systems Builder and Full-stack developer
         </div>
 
         <div className="space-y-6">
@@ -45,14 +47,13 @@ export default function HeroSection() {
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] text-[#f5ece7] md:text-7xl">
-              Building reliable digital products.
+              Building AI systems that solve real problems.
             </h1>
           </motion.div>
 
           <p className="max-w-2xl text-lg leading-8 text-[rgba(245,236,231,0.8)] md:text-xl">
-            I design and ship practical software across the stack, from
-            intuitive frontends to the backend services and automation that keep
-            them resilient.
+            I help businesses save time through AI, automation, and intelligent
+            software.
           </p>
         </div>
 
