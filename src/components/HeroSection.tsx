@@ -38,7 +38,7 @@ export default function HeroSection() {
             The navy base above (instead of the page's warm glow) keeps the
             blue video from turning muddy brown. On desktop the animated glow
             behind the text does this job. */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,15,26,0.25)_0%,rgba(10,15,26,0.6)_35%,rgba(10,15,26,0.8)_70%,rgba(10,15,26,0.9)_100%)] lg:hidden" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,15,26,0)_0%,rgba(10,15,26,0.3)_35%,rgba(10,15,26,0.5)_70%,rgba(10,15,26,0.65)_100%)] lg:hidden" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-black/0 via-black/10 to-black/70" />
       </div>
 
