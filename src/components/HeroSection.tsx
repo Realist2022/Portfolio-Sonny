@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const focusAreas = [
   "Designing and implementing scalable software architectures",
@@ -10,6 +10,8 @@ const focusAreas = [
 ];
 
 export default function HeroSection() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section className="relative grid items-center gap-10 lg:min-h-[calc(100svh-100px)] lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
       <div
@@ -26,19 +28,38 @@ export default function HeroSection() {
           loop
           muted
           playsInline
-          className="h-full w-full object-cover mix-blend-screen pointer-events-none brightness-125 saturate-110 lg:-scale-x-100"
+          className="h-full w-full object-cover mix-blend-screen pointer-events-none brightness-125 saturate-110"
         >
           <source src="/videos/hero_main.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/25" />
-        {/* Readability scrim: darkens the video behind the text and fades out
-            to the right so the scene stays visible. On mobile the text spans
-            the full width, so the scrim is an even wash instead. */}
-        <div className="absolute inset-0 bg-black/45 lg:bg-transparent lg:bg-[linear-gradient(90deg,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.62)_30%,rgba(0,0,0,0.3)_52%,rgba(0,0,0,0)_72%)]" />
+        {/* On mobile the text spans the full width, so darken the whole video.
+            On desktop the animated glow behind the text does this job. */}
+        <div className="absolute inset-0 bg-black/45 lg:hidden" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-black/0 via-black/10 to-black/70" />
       </div>
 
       <div className="relative z-10 space-y-8">
+        {/* Animated dark glow behind the hero copy so it stays readable over
+            the brightest part of the video (the brain). It fades in, then
+            slowly "breathes". Desktop only; mobile uses the wash above. */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -inset-x-24 -inset-y-20 -z-10 hidden lg:block"
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: reduceMotion ? 0 : 1.2, ease: "easeOut" }}
+        >
+          <motion.div
+            className="h-full w-full rounded-full bg-[radial-gradient(ellipse_at_40%_50%,rgba(0,0,0,0.8)_0%,rgba(0,0,0,0.6)_40%,rgba(0,0,0,0)_72%)] blur-2xl"
+            animate={
+              reduceMotion
+                ? undefined
+                : { opacity: [1, 0.82, 1], scale: [1, 1.04, 1] }
+            }
+            transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
+          />
+        </motion.div>
         <div className="inline-flex rounded-full border border-[rgba(255,75,31,0.7)] bg-black/55 px-4 py-2 text-sm font-medium tracking-[0.14em] text-[#ffe6dc] uppercase backdrop-blur-sm">
           AI • Automation • Software
         </div>
