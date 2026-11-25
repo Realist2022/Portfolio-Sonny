@@ -51,10 +51,13 @@ export async function POST(request: Request): Promise<Response> {
       // quietly broken in production.
       body: "{}",
       cache: "no-store",
-      // Short on purpose: the upstream returns 202 the moment it has queued
-      // the wake-up, so anything slower than this means the API itself is
-      // cold — and waiting longer would not help the visitor.
-      signal: AbortSignal.timeout(Math.min(timeoutMs(), 10_000)),
+      // The upstream returns 202 the moment it has queued the wake-up, so
+      // this only waits long when Cloud Run itself is scaled to zero. Give
+      // that container start room to finish: hanging up mid-start can cancel
+      // the request before /api/warm ever runs, and then the GPU never gets
+      // pinged. Nobody waits on this (the dialog fires and forgets), so a
+      // longer limit costs the visitor nothing.
+      signal: AbortSignal.timeout(Math.min(timeoutMs(), 30_000)),
     });
     return Response.json(
       { warming: upstream.ok, detail: upstream.ok ? "Warming." : "Upstream declined." },
