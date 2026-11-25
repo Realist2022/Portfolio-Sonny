@@ -20,8 +20,9 @@ export default function Navbar() {
       <div className="relative flex w-full items-center justify-between px-5 h-[100px]">
 
         {/* LOGO */}
-        <a href="#top" onClick={closeMenu}>
-          <img src="/SonnyTaparaLogo.png" alt="Logo" className="h-[100px] w-auto flex-shrink-0" />
+        <a href="#top" onClick={closeMenu} className="logo-shine relative inline-block flex-shrink-0">
+          <img src="/SonnyTaparaLogo-badge.png" alt="Sonny Tapara, AI Systems Builder &amp; Full-Stack Developer" className="h-[84px] w-auto flex-shrink-0 max-[900px]:h-[64px] max-[400px]:h-[52px]" />
+          <span aria-hidden="true" className="logo-shine__light" />
         </a>
 
         {/* HAMBURGER / XMARK */}

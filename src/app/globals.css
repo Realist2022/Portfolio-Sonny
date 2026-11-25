@@ -165,3 +165,44 @@ a {
   animation: splash-ring-sync 30s ease-out infinite;
   pointer-events: none;
 }
+
+/* Navbar logo: a light that travels around the badge's red border.
+   The mask is the red border extracted from the logo, so the light
+   only shows on the border itself. */
+@property --logo-shine-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.logo-shine__light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--logo-shine-angle),
+    transparent 0deg,
+    transparent 300deg,
+    rgba(255, 120, 40, 0.6) 330deg,
+    rgba(255, 245, 225, 1) 352deg,
+    transparent 360deg
+  );
+  -webkit-mask: url("/SonnyTaparaLogo-border-mask.png") center / 100% 100% no-repeat;
+  mask: url("/SonnyTaparaLogo-border-mask.png") center / 100% 100% no-repeat;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 4px rgba(255, 140, 60, 0.9));
+  animation: logo-shine-spin 4s linear infinite;
+}
+
+@keyframes logo-shine-spin {
+  to {
+    --logo-shine-angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-shine__light {
+    animation: none;
+    display: none;
+  }
+}
