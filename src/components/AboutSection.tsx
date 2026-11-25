@@ -96,9 +96,9 @@ const AnimatedOnScroll: React.FC<AnimatedOnScrollProps> = ({
   const ref = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState<boolean>(false);
   const [dirState, setDirState] = useState<AnimationDirection>(dir);
-  
+
   // Start at 0 to match Server-Side Rendering
-  const lastYRef = useRef<number>(0); 
+  const lastYRef = useRef<number>(0);
   const [scrollDir, setScrollDir] = useState<ScrollDirection>("down");
 
   useEffect(() => {
@@ -124,7 +124,7 @@ const AnimatedOnScroll: React.FC<AnimatedOnScrollProps> = ({
 
         setInView(isIntersecting);
       },
-      { threshold }
+      { threshold },
     );
 
     obs.observe(el);
@@ -137,9 +137,10 @@ const AnimatedOnScroll: React.FC<AnimatedOnScrollProps> = ({
       const y = window.scrollY;
       const prev = lastYRef.current;
       lastYRef.current = y;
-      
-      const dirNow: ScrollDirection = y > prev ? "down" : y < prev ? "up" : scrollDir;
-      
+
+      const dirNow: ScrollDirection =
+        y > prev ? "down" : y < prev ? "up" : scrollDir;
+
       if (dirNow !== scrollDir) {
         if (raf) cancelAnimationFrame(raf);
         raf = requestAnimationFrame(() => setScrollDir(dirNow));
@@ -157,8 +158,8 @@ const AnimatedOnScroll: React.FC<AnimatedOnScrollProps> = ({
     dirState === "left"
       ? "translateX(-40px)"
       : dirState === "right"
-      ? "translateX(40px)"
-      : "none";
+        ? "translateX(40px)"
+        : "none";
 
   const style: React.CSSProperties = {
     opacity: inView ? 1 : 0,
@@ -167,7 +168,7 @@ const AnimatedOnScroll: React.FC<AnimatedOnScrollProps> = ({
     willChange: "transform, opacity",
   };
 
-return (
+  return (
     <div ref={ref} style={style}>
       {children}
     </div>
@@ -212,7 +213,8 @@ const AboutSection: React.FC = () => {
                   About Sonny Tapara
                 </h2>
                 <p className="m-0 text-base text-[#ff4b1f]">
-                  Full-Stack Developer & Software Engineer
+                  I build AI systems that solve real problems and give people
+                  their time back.
                 </p>
               </div>
             </AnimatedOnScroll>
@@ -226,22 +228,30 @@ const AboutSection: React.FC = () => {
           <div className="flex w-full max-w-[760px] flex-col gap-[18px] text-center">
             <AnimatedOnScroll flipOnReenter>
               <p className="m-0 text-[1.03rem] leading-[1.9] text-[rgba(245,236,231,0.8)]">
-                I&apos;m a full-stack developer whose journey began not just with
-                code, but with a deep curiosity for solving tangible problems.
-                My background in electronics and systems engineering gives me a
-                unique, diagnostic mindset that I now apply to architecting
-                secure, scalable software from the ground up.
+                I've always been fascinated by how things work. From repairing
+                electronics and building automation projects to developing
+                AI-powered applications, I've spent years learning how systems
+                fit together and how they can be improved. Today, I combine that
+                curiosity with software engineering and AI to build practical
+                solutions that create real-world impact.
               </p>
             </AnimatedOnScroll>
             <AnimatedOnScroll flipOnReenter delay={100}>
               <p className="m-0 text-[1.03rem] leading-[1.9] text-[rgba(245,236,231,0.8)]">
-                Through intensive, project-based training at Mission Ready, I
-                translated this hands-on experience into a professional software
-                development skill set. This foundation was invaluable when
-                engineering resilient data pipelines at Foodstuffs and building
-                fully automated systems with MicroPython. I thrive on turning
-                complex challenges into clean, efficient, and user-centric
-                applications.
+                My work focuses on building intelligent systems that automate
+                repetitive tasks, streamline business processes, and help people
+                make better use of their time. Whether it's RAG systems, AI
+                chatbots, workflow automation, or custom software, I enjoy
+                turning complex challenges into simple, scalable solutions.
+              </p>
+            </AnimatedOnScroll>
+            <AnimatedOnScroll flipOnReenter>
+              <p className="m-0 text-[1.03rem] leading-[1.9] text-[rgba(245,236,231,0.8)]">
+                For me, technology is about creating freedom. The best solutions
+                aren't just technically impressive, they solve meaningful
+                problems and continue delivering value long after they're built.
+                That's what motivates me to keep learning, building, and
+                improving every day.
               </p>
             </AnimatedOnScroll>
           </div>
@@ -254,7 +264,9 @@ const AboutSection: React.FC = () => {
           <div className="grid w-full grid-cols-3 gap-[18px] items-stretch max-[960px]:grid-cols-2 max-[720px]:grid-cols-1">
             {skillGroups.map((group, index) => (
               <AnimatedOnScroll key={group.title} dir="none" delay={index * 50}>
-                <div className={`${panelClass} flex flex-col items-center gap-[18px]`}>
+                <div
+                  className={`${panelClass} flex flex-col items-center gap-[18px]`}
+                >
                   <h4 className="m-0 text-center text-xl text-[#ff4b1f]">
                     {group.title}
                   </h4>
@@ -278,7 +290,9 @@ const AboutSection: React.FC = () => {
           <div className="grid w-full grid-cols-4 gap-[18px] max-[960px]:grid-cols-2 max-[720px]:grid-cols-1">
             {values.map((val, index) => (
               <AnimatedOnScroll key={val.title} dir="none" delay={index * 50}>
-                <div className={`${panelClass} flex flex-col items-center gap-3 text-center`}>
+                <div
+                  className={`${panelClass} flex flex-col items-center gap-3 text-center`}
+                >
                   <h4 className="m-0 text-center text-xl text-[#ff4b1f]">
                     {val.title}
                   </h4>
