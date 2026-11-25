@@ -36,7 +36,7 @@ export default function HeroSection() {
 
       <div className="relative z-10 space-y-8">
         <div className="inline-flex rounded-full border border-[rgba(255,75,31,0.55)] bg-[rgba(255,75,31,0.08)] px-4 py-2 text-sm font-medium tracking-[0.14em] text-[#f6d7cc] uppercase">
-          Creative AI Systems Builder and Full-stack developer
+          AI Systems Engineer and Full-stack developer
         </div>
 
         <div className="space-y-6">
