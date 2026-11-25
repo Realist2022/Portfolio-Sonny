@@ -24,10 +24,14 @@ const ALLOWED_EXTENSIONS = [".pdf", ".txt"];
 
 /**
  * A Modal cold start is minutes, not seconds: the container has to boot vLLM
- * and load the LoRA before it can answer. Three minutes rides one out instead
- * of failing halfway through it.
+ * and load the LoRA before it can answer, and the match still makes its LLM
+ * calls after that. 180s was not enough for a fully cold path (Cloud Run +
+ * Modal both scaled to zero), so this sits just under the 300s `maxDuration`
+ * the match route declares. The margin matters: if the platform kills the
+ * function first, the visitor gets the host's bare 504 instead of this
+ * module's readable timeout message.
  */
-const DEFAULT_TIMEOUT_MS = 180_000;
+const DEFAULT_TIMEOUT_MS = 280_000;
 
 /** Per-IP budget for the GPU-backed endpoints. */
 const DEFAULT_RATE_LIMIT = 5;
@@ -135,8 +139,9 @@ export function appendWeights(form: FormData, outbound: FormData): void {
 
 function authHeaders(): HeadersInit {
   const key = process.env.CV_GUESTIMATOR_API_KEY;
-  // Optional: the FastAPI app is currently unauthenticated. Set the env var
-  // once it is not and this starts sending the bearer token, no code change.
+  // Required in production: the deployed FastAPI app rejects requests without
+  // this token (401) or with the wrong one (403). Left empty, nothing is sent,
+  // which only works against a local, unauthenticated instance.
   return key ? { Authorization: `Bearer ${key}` } : {};
 }
 
