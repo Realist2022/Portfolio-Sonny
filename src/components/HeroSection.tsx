@@ -33,9 +33,11 @@ export default function HeroSection() {
           <source src="/videos/hero_main.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/25" />
-        {/* On mobile the text spans the full width, so darken the whole video.
-            On desktop the animated glow behind the text does this job. */}
-        <div className="absolute inset-0 bg-black/45 lg:hidden" />
+        {/* On mobile and tablet the text spans the full width, so tint the
+            whole video with a cool navy that gets darker towards the text.
+            On desktop the animated glow
+            behind the text does this job. */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,15,26,0)_0%,rgba(10,15,26,0.15)_35%,rgba(10,15,26,0.3)_70%,rgba(10,15,26,0.45)_100%)] lg:hidden" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-black/0 via-black/10 to-black/70" />
       </div>
 
