@@ -21,7 +21,7 @@ export default function Navbar() {
 
         {/* LOGO */}
         <a href="#top" onClick={closeMenu}>
-          <img src="/SonnyTaparaLogo-badge.png" alt="Sonny Tapara, AI Systems Builder &amp; Full-Stack Developer" className="h-[60px] w-auto flex-shrink-0 max-[900px]:h-[48px] max-[400px]:h-[40px]" />
+          <img src="/SonnyTaparaLogo-badge.png" alt="Sonny Tapara, AI Systems Builder &amp; Full-Stack Developer" className="h-[84px] w-auto flex-shrink-0 max-[900px]:h-[64px] max-[400px]:h-[52px]" />
         </a>
 
         {/* HAMBURGER / XMARK */}
