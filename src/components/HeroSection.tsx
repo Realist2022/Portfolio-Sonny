@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const focusAreas = [
   "Designing and implementing scalable software architectures",
@@ -10,6 +10,8 @@ const focusAreas = [
 ];
 
 export default function HeroSection() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section className="relative grid items-center gap-10 lg:min-h-[calc(100svh-100px)] lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
       <div
@@ -31,11 +33,34 @@ export default function HeroSection() {
           <source src="/videos/hero_main.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/25" />
+        {/* On mobile the text spans the full width, so darken the whole video.
+            On desktop the animated glow behind the text does this job. */}
+        <div className="absolute inset-0 bg-black/45 lg:hidden" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-black/0 via-black/10 to-black/70" />
       </div>
 
       <div className="relative z-10 space-y-8">
-        <div className="inline-flex rounded-full border border-[rgba(255,75,31,0.55)] bg-[rgba(255,75,31,0.08)] px-4 py-2 text-sm font-medium tracking-[0.14em] text-[#f6d7cc] uppercase">
+        {/* Animated dark glow behind the hero copy so it stays readable over
+            the brightest part of the video (the brain). It fades in, then
+            slowly "breathes". Desktop only; mobile uses the wash above. */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -inset-x-24 -inset-y-20 -z-10 hidden lg:block"
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: reduceMotion ? 0 : 1.2, ease: "easeOut" }}
+        >
+          <motion.div
+            className="h-full w-full rounded-full bg-[radial-gradient(ellipse_at_40%_50%,rgba(0,0,0,0.8)_0%,rgba(0,0,0,0.6)_40%,rgba(0,0,0,0)_72%)] blur-2xl"
+            animate={
+              reduceMotion
+                ? undefined
+                : { opacity: [1, 0.82, 1], scale: [1, 1.04, 1] }
+            }
+            transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
+          />
+        </motion.div>
+        <div className="inline-flex rounded-full border border-[rgba(255,75,31,0.7)] bg-black/55 px-4 py-2 text-sm font-medium tracking-[0.14em] text-[#ffe6dc] uppercase backdrop-blur-sm">
           AI • Automation • Software
         </div>
 
@@ -46,12 +71,12 @@ export default function HeroSection() {
             viewport={{ once: true }} // So it only animates once when they scroll to it
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] text-[#f5ece7] md:text-7xl">
+            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] text-[#f5ece7] [text-shadow:0_2px_24px_rgba(0,0,0,0.65)] md:text-7xl">
               Building AI systems that solve real problems.
             </h1>
           </motion.div>
 
-          <p className="max-w-2xl text-lg leading-8 font-semibold text-[rgba(245,236,231,0.8)] md:text-xl">
+          <p className="max-w-2xl text-lg leading-8 font-semibold text-[rgba(245,236,231,0.95)] [text-shadow:0_1px_12px_rgba(0,0,0,0.8)] md:text-xl">
             I help businesses save time through AI, automation, and intelligent
             software.
           </p>
@@ -66,7 +91,7 @@ export default function HeroSection() {
           </a>
           <a
             href="#featured-work"
-            className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/12 bg-white/4 px-6 font-semibold text-[#f5ece7] transition hover:-translate-y-px hover:border-[rgba(255,75,31,0.35)] hover:bg-[rgba(255,75,31,0.08)]"
+            className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/20 bg-black/45 px-6 backdrop-blur-sm font-semibold text-[#f5ece7] transition hover:-translate-y-px hover:border-[rgba(255,75,31,0.35)] hover:bg-[rgba(255,75,31,0.08)]"
           >
             Explore Work
           </a>
