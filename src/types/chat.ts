@@ -1,11 +1,16 @@
+/** A passage the bot's reply cited as [n]. */
+export interface ChatSource {
+	n: number;
+	title: string;
+	heading: string;
+	url: string;
+}
+
 export interface Message {
 	id: number;
 	message: string;
 	sender: "user" | "bot";
-}
-
-export interface LLMResponse {
-	reply: string;
+	sources?: ChatSource[];
 }
 
 // One earlier turn, in the shape the chat backend expects.

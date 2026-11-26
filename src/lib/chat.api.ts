@@ -1,38 +1,61 @@
-import type { ChatHistoryMessage, LLMResponse } from "@/src/types/chat";
+import type { ChatHistoryMessage, ChatSource } from "@/src/types/chat";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
+export interface ChatResult {
+	reply: string;
+	sources: ChatSource[];
+}
 
-export async function sendMessageToLLM(
+/** An error whose message was written for the visitor (e.g. the rate limit). */
+function visitorError(message: string): Error {
+	const error = new Error(message);
+	error.name = "ChatApiError";
+	return error;
+}
+
+/**
+ * Send a message to this site's /api/chat route and read its server-sent
+ * events: `onDelta` gets the reply as it is written, and the promise resolves
+ * with the full reply and the sources it cited.
+ */
+export async function streamChat(
 	message: string,
-	history: ChatHistoryMessage[] = [],
-): Promise<LLMResponse> {
-	const response = await fetch(`${API_URL}/api/chat`, {
+	history: ChatHistoryMessage[],
+	onDelta: (text: string) => void,
+): Promise<ChatResult> {
+	const response = await fetch("/api/chat", {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
+		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ message, history }),
 	});
 
-	if (!response.ok) {
-		let errorMessage = "Something went wrong";
-
+	if (!response.ok || !response.body) {
+		let detail = "Something went wrong";
 		try {
-			const errorData = await response.json();
-			// FastAPI puts its message in `detail`; a validation error makes that a list.
-			const detail =
-				typeof errorData?.detail === "string" ? errorData.detail : undefined;
-			errorMessage =
-				detail || errorData?.error || errorData?.message || errorMessage;
+			const data = await response.json();
+			if (typeof data?.detail === "string") detail = data.detail;
 		} catch {
-			errorMessage = "Server error occurred";
+			// keep the generic message
 		}
-
-		const error = new Error(errorMessage);
-		// Marks a message written by the backend, safe to show the visitor.
-		error.name = "ChatApiError";
-		throw error;
+		throw visitorError(detail);
 	}
 
-	return response.json() as Promise<LLMResponse>;
+	const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
+	let buffer = "";
+	for (;;) {
+		const { value, done } = await reader.read();
+		if (done) break;
+		buffer += value;
+		// Events end with a blank line; keep any partial one for the next read.
+		const events = buffer.split("\n\n");
+		buffer = events.pop() ?? "";
+		for (const raw of events) {
+			const line = raw.split("\n").find((l) => l.startsWith("data: "));
+			if (!line) continue;
+			const event = JSON.parse(line.slice(6));
+			if (event.type === "delta") onDelta(event.text);
+			else if (event.type === "done") return { reply: event.reply, sources: event.sources ?? [] };
+			else if (event.type === "error") throw visitorError(event.message);
+		}
+	}
+	throw new Error("The reply ended early.");
 }
