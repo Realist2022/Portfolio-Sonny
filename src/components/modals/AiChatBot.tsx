@@ -138,6 +138,29 @@ export default function AiChatBot() {
 											>
 												{msg.message}
 											</p>
+											{msg.sources && msg.sources.length > 0 && (
+												<ul className="mt-3 flex flex-col gap-1 border-t border-[rgba(255,75,31,0.15)] pt-2 text-xs text-[rgba(245,236,231,0.55)]">
+													{msg.sources.map((source) => {
+														const label = `[${source.n}] ${source.heading}`;
+														return (
+															<li key={source.n}>
+																{source.url ? (
+																	<a
+																		href={source.url}
+																		target="_blank"
+																		rel="noopener noreferrer"
+																		className="underline decoration-[rgba(255,75,31,0.4)] underline-offset-2 transition hover:text-[#ff5a37]"
+																	>
+																		{label}
+																	</a>
+																) : (
+																	label
+																)}
+															</li>
+														);
+													})}
+												</ul>
+											)}
 										</div>
 									</div>
 								))}
