@@ -27,7 +27,7 @@ export default function AiChatBot() {
 		<>
 			{/* Chat Panel */}
 			{isOpen && (
-				<div className="fixed right-6 bottom-24 z-50 flex h-[560px] w-[360px] flex-col overflow-hidden rounded-3xl border border-[rgba(255,75,31,0.35)] bg-[#09090b] shadow-[0_24px_80px_rgba(0,0,0,0.7)] sm:w-[400px]">
+				<div className="fixed inset-x-3 bottom-24 z-50 flex h-[min(560px,calc(100dvh-7.5rem))] flex-col overflow-hidden rounded-3xl border border-[rgba(255,75,31,0.35)] bg-[#09090b] shadow-[0_24px_80px_rgba(0,0,0,0.7)] sm:inset-x-auto sm:right-6 sm:w-[400px]">
 					{/* Header */}
 					<header className="flex items-center justify-between border-b border-[rgba(255,75,31,0.2)] p-4">
 						<div className="flex items-center gap-3">
@@ -195,7 +195,7 @@ export default function AiChatBot() {
 								onChange={(e) => setInputValue(e.target.value)}
 								placeholder="Type your message..."
 								disabled={loading}
-								className="flex-1 rounded-full border border-[rgba(255,75,31,0.2)] bg-[rgba(255,255,255,0.04)] px-4 py-2.5 text-sm text-[#f5ece7] placeholder:text-[rgba(245,236,231,0.3)] transition focus:border-[rgba(255,75,31,0.6)] focus:outline-none disabled:opacity-50"
+								className="min-w-0 flex-1 rounded-full border border-[rgba(255,75,31,0.2)] bg-[rgba(255,255,255,0.04)] px-4 py-2.5 text-base text-[#f5ece7] sm:text-sm sm:pointer-coarse:text-base placeholder:text-[rgba(245,236,231,0.3)] transition focus:border-[rgba(255,75,31,0.6)] focus:outline-none disabled:opacity-50"
 							/>
 							<button
 								type="submit"
