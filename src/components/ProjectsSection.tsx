@@ -63,7 +63,7 @@ export default function ProjectsSection() {
 
 						{/* Photo carousel */}
 						{!project.image && project.carouselImages && project.carouselImages.length > 0 && (
-							<ImageCarousel images={project.carouselImages} alt={project.title} />
+							<ImageCarousel images={project.carouselImages} alt={project.title} fit={project.imageFit} />
 						)}
 
 						<div className="flex flex-1 flex-col gap-4 p-6">

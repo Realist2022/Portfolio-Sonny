@@ -6,6 +6,8 @@ import { useRef, useState } from "react";
 interface ImageCarouselProps {
 	images: string[];
 	alt: string;
+	/** "contain" shows each photo whole on a dark backdrop instead of cropping it */
+	fit?: "cover" | "contain";
 }
 
 /**
@@ -13,7 +15,7 @@ interface ImageCarouselProps {
  * with snap points, so touch swipe works without a library; the arrows and
  * dots scroll the same strip.
  */
-export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
+export default function ImageCarousel({ images, alt, fit = "cover" }: ImageCarouselProps) {
 	const trackRef = useRef<HTMLDivElement>(null);
 	const [index, setIndex] = useState(0);
 
@@ -46,7 +48,7 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
 							src={src}
 							alt={`${alt}, photo ${i + 1} of ${images.length}`}
 							fill
-							className="object-cover"
+							className={fit === "contain" ? "bg-black object-contain" : "object-cover"}
 							sizes="(max-width: 768px) 100vw, 33vw"
 						/>
 					</div>
