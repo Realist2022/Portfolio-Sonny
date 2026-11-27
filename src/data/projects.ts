@@ -23,7 +23,7 @@ const projects: Project[] = [
     title: "Growize App",
     description:
       "A mobile gardening assistant that uses AI to provide precise planting schedules for edible plants like potatoes and Kūmara. Built with React Native and Firebase for full-stack mobile development.",
-    image: "/images/Growize_banner.jpg",
+    image: "/images/Growize_cover.jpg",
     links: [
       {
         label: "Website Version",
@@ -89,7 +89,7 @@ const projects: Project[] = [
     title: "mySnapShare",
     description:
       "Event photo sharing: a host creates an event, guests scan a QR code to upload photos from their phones, and everyone sees them in one shared gallery. Next.js and TypeScript frontend on Vercel, with a Python FastAPI backend on AWS Lambda behind API Gateway, using Cognito, DynamoDB, S3 and CloudFront, all defined in AWS CDK.",
-    image: "/images/mySnapShare.jpg",
+    image: "/images/mySnapShare_cover.jpg",
     links: [
       {
         label: "Live Site",

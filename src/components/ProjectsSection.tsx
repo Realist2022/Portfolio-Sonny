@@ -49,7 +49,7 @@ export default function ProjectsSection() {
 					>
 						{/* Cover image */}
 						{project.image && (
-							<div className="relative h-44 w-full overflow-hidden rounded-t-[22px]">
+							<div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-[22px]">
 								<Image
 									src={project.image}
 									alt={project.title}
