@@ -111,16 +111,20 @@ const projects: Project[] = [
   },
   {
     id: 5,
-    title: "AI Chat Bot",
+    title: "Tautoko — RAG Support Assistant",
     description:
-      "Custom AI chatbot for interview prep — rehearse answers, get instant feedback, and iterate. Built with React, Node.js, Express, and Google AI Studio.",
+      "Proof-of-concept member portal and support assistant for a New Zealand carbon-certification body. Members ask questions in their own words and get answers grounded in the programme documents, citing the rule and page. A Bedrock guardrail keeps the assistant from advising members, protecting the certifier's ISO 14065 impartiality. Hybrid retrieval (embeddings + BM25), an eval gate on every change, and an admin review loop where a person approves each update before it goes live on AWS Lambda.",
     links: [],
     techStack: [
-      "React",
-      "Node.js",
-      "Express.js",
-      "Google AI Studio",
-      "REST APIs",
+      "Python",
+      "FastAPI",
+      "RAG",
+      "Anthropic API",
+      "AWS Bedrock Guardrails",
+      "AWS Lambda",
+      "Next.js",
+      "Terraform",
+      "LLM Evals",
     ],
   },
   {
