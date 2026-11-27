@@ -34,7 +34,7 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
 		"absolute top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/55 text-lg leading-none text-[#f6d7cc] transition hover:bg-black/75";
 
 	return (
-		<div className="relative h-44 w-full overflow-hidden rounded-t-[22px]">
+		<div className="relative aspect-square w-full overflow-hidden rounded-t-[22px]">
 			<div
 				ref={trackRef}
 				onScroll={onScroll}
