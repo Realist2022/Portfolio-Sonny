@@ -87,6 +87,7 @@ const projects: Project[] = [
     title: "mySnapShare",
     description:
       "Event photo sharing: a host creates an event, guests scan a QR code to upload photos from their phones, and everyone sees them in one shared gallery. Next.js and TypeScript frontend on Vercel, with a Python FastAPI backend on AWS Lambda behind API Gateway, using Cognito, DynamoDB, S3 and CloudFront, all defined in AWS CDK.",
+    image: "/images/mySnapShare.jpg",
     links: [
       {
         label: "Live Site",
