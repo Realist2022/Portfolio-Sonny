@@ -18,7 +18,7 @@ export interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "Growise App",
+    title: "Growize App",
     description:
       "A mobile gardening assistant that uses AI to provide precise planting schedules for edible plants like potatoes and Kūmara. Built with React Native and Firebase for full-stack mobile development.",
     image: "/images/Growise_IOS.png",
