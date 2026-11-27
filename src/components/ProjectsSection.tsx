@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import projects from "../data/projects";
 import TechScrollBar from "./TechScrollBar";
+import ImageCarousel from "./ImageCarousel";
 import CvMatchModal from "./modals/CvMatchModal";
 
 // Collect all unique tech tags across every project
@@ -60,21 +61,9 @@ export default function ProjectsSection() {
 							</div>
 						)}
 
-						{/* Carousel preview — shows first image as cover */}
+						{/* Photo carousel */}
 						{!project.image && project.carouselImages && project.carouselImages.length > 0 && (
-							<div className="relative h-44 w-full overflow-hidden rounded-t-[22px]">
-								<Image
-									src={project.carouselImages[0]}
-									alt={project.title}
-									fill
-									className="object-cover"
-									sizes="(max-width: 768px) 100vw, 33vw"
-									{...(project.id === projects[0].id ? { priority: true } : {})}
-								/>
-								<div className="absolute bottom-2 right-3 rounded-full bg-black/60 px-2 py-0.5 text-xs text-[#f6d7cc]">
-									{project.carouselImages.length} photos
-								</div>
-							</div>
+							<ImageCarousel images={project.carouselImages} alt={project.title} />
 						)}
 
 						<div className="flex flex-1 flex-col gap-4 p-6">
