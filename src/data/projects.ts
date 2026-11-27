@@ -114,6 +114,7 @@ const projects: Project[] = [
     title: "Tautoko — RAG Support Assistant",
     description:
       "Proof-of-concept member portal and support assistant for a New Zealand carbon-certification body. Members ask questions in their own words and get answers grounded in the programme documents, citing the rule and page. A Bedrock guardrail keeps the assistant from advising members, protecting the certifier's ISO 14065 impartiality. Hybrid retrieval (embeddings + BM25), an eval gate on every change, and an admin review loop where a person approves each update before it goes live on AWS Lambda.",
+    image: "/images/Tautoko_safety_layers.jpg",
     links: [],
     techStack: [
       "Python",
