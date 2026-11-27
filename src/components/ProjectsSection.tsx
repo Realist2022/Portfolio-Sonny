@@ -49,7 +49,7 @@ export default function ProjectsSection() {
 					>
 						{/* Cover image */}
 						{project.image && (
-							<div className="relative h-44 w-full overflow-hidden rounded-t-[22px]">
+							<div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-[22px]">
 								<Image
 									src={project.image}
 									alt={project.title}
@@ -63,7 +63,7 @@ export default function ProjectsSection() {
 
 						{/* Photo carousel */}
 						{!project.image && project.carouselImages && project.carouselImages.length > 0 && (
-							<ImageCarousel images={project.carouselImages} alt={project.title} />
+							<ImageCarousel images={project.carouselImages} alt={project.title} fit={project.imageFit} />
 						)}
 
 						<div className="flex flex-1 flex-col gap-4 p-6">
