@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import projects from "../data/projects";
 import TechScrollBar from "./TechScrollBar";
+import CvMatchModal from "./modals/CvMatchModal";
 
 // Collect all unique tech tags across every project
 const allFilters = Array.from(
@@ -12,6 +13,7 @@ const allFilters = Array.from(
 
 export default function ProjectsSection() {
 	const [selectedFilter, setSelectedFilter] = useState<string>("");
+	const [isCvMatchOpen, setIsCvMatchOpen] = useState(false);
 
 	const filtered = useMemo(
 		() =>
@@ -98,9 +100,18 @@ export default function ProjectsSection() {
 							)}
 
 							{/* Links */}
-							{project.links && project.links.length > 0 && (
+							{(project.liveDemo || (project.links && project.links.length > 0)) && (
 								<div className="flex flex-wrap gap-2 pt-1">
-									{project.links.map((link) => (
+									{project.liveDemo === "cv-match" && (
+										<button
+											type="button"
+											onClick={() => setIsCvMatchOpen(true)}
+											className="inline-flex items-center rounded-full border border-[#ff4b1f] bg-[#ff4b1f] px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-[#ff6a43]"
+										>
+											Try it live
+										</button>
+									)}
+									{project.links?.map((link) => (
 										<a
 											key={link.url}
 											href={link.url}
@@ -117,6 +128,9 @@ export default function ProjectsSection() {
 					</article>
 				))}
 			</div>
+
+			{/* Rendered outside the cards: their hover transform would trap a fixed-position dialog. */}
+			<CvMatchModal open={isCvMatchOpen} onClose={() => setIsCvMatchOpen(false)} />
 		</section>
 	);
 }
