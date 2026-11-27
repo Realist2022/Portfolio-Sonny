@@ -84,18 +84,26 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    title: "Z App — Station Locator",
+    title: "mySnapShare",
     description:
-      "React + Google Maps frontend with Node.js/Express APIs and MongoDB Atlas. Interactive mapping with real-time search built in a collaborative Agile workflow.",
-    links: [],
+      "Event photo sharing: a host creates an event, guests scan a QR code to upload photos from their phones, and everyone sees them in one shared gallery. Next.js and TypeScript frontend on Vercel, with a Python FastAPI backend on AWS Lambda behind API Gateway, using Cognito, DynamoDB, S3 and CloudFront, all defined in AWS CDK.",
+    links: [
+      {
+        label: "Live Site",
+        url: "https://my-snap-share.vercel.app",
+      },
+    ],
     techStack: [
-      "React",
-      "Node.js",
-      "Express.js",
-      "MongoDB",
-      "Google Maps API",
-      "REST APIs",
-      "Agile",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Python",
+      "FastAPI",
+      "AWS Lambda",
+      "AWS CDK",
+      "DynamoDB",
+      "S3",
+      "Cognito",
     ],
   },
   {
