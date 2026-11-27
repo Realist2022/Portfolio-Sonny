@@ -74,7 +74,7 @@ export default function HeroSection() {
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] text-[#f5ece7] [text-shadow:0_2px_24px_rgba(0,0,0,0.65)] md:text-7xl">
-              Building AI systems that solve real problems.
+              Building systems that solve real problems.
             </h1>
           </motion.div>
 
