@@ -16,7 +16,7 @@ const skillGroups = [
     title: "Frontend",
     skills: [
       "React",
-      "React Native",
+      "React Native Expo",
       "Mobile Development",
       "JavaScript ES6+",
       "Bootstrap",
@@ -24,52 +24,71 @@ const skillGroups = [
       "CSS",
       "Power BI",
       "Responsive Design",
+      "Gradio",
+      "Next.js",
     ],
   },
   {
     title: "Backend",
     skills: [
       "Node.js",
+      "FastAPI",
+      "BigQuery",
       "Firebase",
       "Express.js",
       "Python",
       "RESTful APIs",
       "MongoDB",
-      "SQL Server",
+      "SQL & NoSQL",
     ],
   },
   {
-    title: "Tools & Platforms",
+    title: "Cloud Platforms & DevOps",
     skills: [
-      "Git/GitHub",
+      "GitHub Actions (CI/CD)",
+      "AWS (Lambda, S3, Cognito)",
+      "Terraform",
       "Docker",
       "Kubernetes",
-      "Firebase Studio",
       "Azure",
-      "VS Code",
       "Google Cloud Platform",
       "JIRA",
-      "DevOps",
+    ],
+  },
+  {
+    title: "AI Engineering",
+    skills: [
+      "RAG Pipelines",
+      "SLM Fine-Tuning (LoRA)",
+      "AI Guardrails",
+      "LLM Evaluations",
+      "AI Cloud Deployments",
+      "Prompt & Context Engineering",
+      "Hybrid Search (Vector + BM25)",
+      "AI Safety & Legal Compliance",
+      "AWS Bedrock",
+      "vLLM / Ollama",
+      "PII Redaction",
     ],
   },
 ];
 
 const values = [
   {
-    title: "Innovation",
-    text: "I love exploring new technologies and finding creative solutions to complex problems.",
+    title: "Systems Thinking",
+    text: "I love pulling apart how systems fit together—from electronics to AI pipelines—and building practical automation that gives people their time back.",
   },
   {
     title: "Quality",
-    text: "Writing clean, maintainable code and following best practices is fundamental to my approach.",
+    text: "Reliable software comes from good architecture, measurable evaluations, and deterministic guardrails so systems hold up in production.",
   },
   {
     title: "Collaboration",
-    text: "Great software is built by great teams. I thrive in collaborative environments.",
+    text: "I work best with clear targets, paired with upfront alignment. Once we confirm the requirements, I lock in and deliver reliably.",
   },
   {
     title: "Growth",
-    text: "Continuous learning and improvement are essential in the ever-evolving tech landscape.",
+    text: "I learn fastest by building. From fine-tuning local models to deploying cloud infrastructure, I constantly test new tools and turn what works into real products.",
   },
 ];
 
@@ -261,7 +280,7 @@ const AboutSection: React.FC = () => {
           <h3 className="m-0 text-center text-[clamp(1.8rem,2.5vw,2.4rem)] leading-[1.1] text-[#ff4b1f]">
             Technical Expertise
           </h3>
-          <div className="grid w-full grid-cols-3 gap-[18px] items-stretch max-[960px]:grid-cols-2 max-[720px]:grid-cols-1">
+          <div className="grid w-full grid-cols-2 gap-[18px] items-stretch max-[720px]:grid-cols-1">
             {skillGroups.map((group, index) => (
               <AnimatedOnScroll key={group.title} dir="none" delay={index * 50}>
                 <div
