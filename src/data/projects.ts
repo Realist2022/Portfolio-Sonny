@@ -13,6 +13,8 @@ export interface Project {
   carouselImages?: string[];
   links?: ProjectLink[];
   techStack?: string[];
+  /** Shows a "Try it live" button that opens the CV match window */
+  liveDemo?: "cv-match";
 }
 
 const projects: Project[] = [
@@ -144,8 +146,9 @@ const projects: Project[] = [
     id: 7,
     title: "CV to Job Guestimator",
     description:
-      "Fine-tuned Llama-3.2-3B with LoRA so three structured-extraction agents run on one small self-hosted model instead of a per-token API. Ships as a FastAPI pipeline that redacts PII, pulls the requirements out of a job listing and scores a CV against them, served either locally through Ollama or on an L4 GPU via vLLM on Modal. Wired into the chat window on this site — open it and follow the score card link.",
-    image: "/images/ft_model.png",  
+      "Fine-tuned Llama-3.2-3B with LoRA so three structured-extraction agents run on one small self-hosted model instead of a per-token API. Ships as a FastAPI pipeline that redacts PII, pulls the requirements out of a job listing and scores a CV against them, served either locally through Ollama or on an L4 GPU via vLLM on Modal. Try it live: drop in a job listing and it scores my CV against it.",
+    image: "/images/ft_model.png",
+    liveDemo: "cv-match",
     links: [
       {
         label: "Guestimator Repo",
